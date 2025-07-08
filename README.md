@@ -52,7 +52,7 @@ This looks up the password for Bandit level 12 (i.e., the 13th line in your `~/.
 ```bash
 ssh_bandit 14 -t 'bash -l'
 ```
-If you have a private key instead of a password, just put the path to the key (e.g. `~/.ssh/id_rsa`) on that line in the password file — the script will detect it and use `ssh -i`.#
+If you have a private key instead of a password, just put the path to the key (e.g. `~/.ssh/id_rsa`) on that line in the password file — the script will detect it and use `ssh -i`.
 ## 📁 Password File Format
 This is just a plain-text file, line-by-line:
 - Line 1 = password for level 0
