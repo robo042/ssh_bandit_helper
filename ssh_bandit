@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+error(){ echo -e "❌ $@" >&2 && return 0 ; } 
+
+error_exit(){ error "$@"; exit 1; }
+
+BANDIT_SERVER='bandit.labs.overthewire.org'
+BANDIT_PORT='2220'
+BANDIT_PASSWORDS="${HOME}/.local/etc/ssh_bandit/passwords"
+
+if [[ ${BASH_SOURCE[0]} == ${0} ]]; then 
+
+    if ! command -v sshpass &>/dev/null; then
+        error_exit \
+            'sshpass is not installed. ' \
+            'Please install it first (e.g. sudo apt install sshpass).'
+    fi
+
+    level="$1"
+    user="bandit${level}"
+    
+    if [[ -z $level || ! $level =~ ^[0-9]+$ ]]; then
+        error_exit "Usage: ssh_bandit <level_number>"
+    fi
+    
+    pw=$(sed -n "$((level + 1))p" "$BANDIT_PASSWORDS")
+    
+    if [[ -z $pw ]]; then
+        error_exit "❌ No password found for bandit${level}"
+    fi
+    
+    eval "pw=$pw"
+    if [[ -f $pw ]]; then
+        ssh -i "$pw" -p \
+            "$BANDIT_PORT" "${user}@${BANDIT_SERVER}" "${@:2}"
+    else
+        sshpass -p "$pw" ssh -p \
+            "$BANDIT_PORT" "${user}@${BANDIT_SERVER}" "${@:2}"
+    fi
+fi
