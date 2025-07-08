@@ -65,3 +65,8 @@ The script will grab line `N + 1` for level `N`. If you're unsure what to put th
 - This doesn't solve anything for you. It just saves you typing ssh and pasting passwords.
 - It’s dumb-simple on purpose
 - No encryption — this is a local dev helper for a game, **not** a secure password vault.
+
+## TODO
+- need to make it easier to update the password file
+- for now you can add `export secret_bandit_passwords=~/.local/etc/ssh_bandit/passwords` to your `~/.bashrc`
+- this allows you to update the file like `vi $secret_bandit_passwords`
