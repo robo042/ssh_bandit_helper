@@ -30,7 +30,7 @@
   src="https://github.com/user-attachments/assets/344bc02a-f0a8-42da-bee4-705b1a61272f"
 />
 <br>
-This summer, we are meeting once a week to work through **OverTheWire: Bandit**
+This summer, we are meeting once a week to work through [OverTheWire: Bandit](https://overthewire.org/wargames/bandit/)
 as a group. Bandit is a beginner-friendly Linux wargame built around SSH,
 filesystems, permissions, shell tools, passwords, ports, weird filenames, and
 general terminal survival.
