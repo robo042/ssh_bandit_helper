@@ -52,7 +52,7 @@ This looks up the password for Bandit level 12 (i.e., the 13th line in your `~/.
 ```bash
 ssh_bandit 14 -t 'bash -l'
 ```
-If you have a private key instead of a password, just put the path to the key (e.g. `~/.ssh/id_rsa`) on that line in the password file — the script will detect it and use `ssh -i`.#
+If you have a private key instead of a password, just put the path to the key (e.g. `~/.ssh/id_rsa`) on that line in the password file — the script will detect it and use `ssh -i`.
 ## 📁 Password File Format
 This is just a plain-text file, line-by-line:
 - Line 1 = password for level 0
@@ -65,3 +65,8 @@ The script will grab line `N + 1` for level `N`. If you're unsure what to put th
 - This doesn't solve anything for you. It just saves you typing ssh and pasting passwords.
 - It’s dumb-simple on purpose
 - No encryption — this is a local dev helper for a game, **not** a secure password vault.
+
+## TODO
+- need to make it easier to update the password file
+- for now you can add `export secret_bandit_passwords=~/.local/etc/ssh_bandit/passwords` to your `~/.bashrc`
+- this allows you to update the file like `vi $secret_bandit_passwords`
