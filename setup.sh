@@ -25,65 +25,68 @@ ____EOF
     return 0
 }
 
-if [[ ${BASH_SOURCE[0]} == $0 ]]; then
+if [[ ${BASH_SOURCE[0]} == $0 ]]
+then 
+     force=/bin/false install=/bin/false remove=/bin/false
+     while [[ $# -gt 0 ]]
+     do case "$1" in -i|--install) install=/bin/true ;;
+                     -r|--remove)   remove=/bin/true ;;
+                     -f|--force )    force=/bin/true ;;
+                     -h|--help)        usage; exit 0 ;;
+        esac
+        shift
+     done
 
-    force=/bin/false install=/bin/false remove=/bin/false
-    while [[ $# -gt 0 ]]; do case "$1" in
-        -i|--install) install=/bin/true ;;
-        -r|--remove)   remove=/bin/true ;;
-        -f|--force )    force=/bin/true ;;
-        -h|--help)        usage; exit 0 ;;
-    esac; shift; done
+     $install && $remove && error_exit "Can't have it both ways."
+     $install || $remove ||{ usage; exit 1; }
+     
+     bin="${HOME}/.local/bin"
+     etc="${HOME}/.local/etc/ssh_bandit"
+     script_dir="$(cd -- $(dirname -- "${BASH_SOURCE[0]}") &>/dev/null && pwd)"
 
-    $install && $remove && error_exit "Can't have it both ways."
-    $install || $remove ||{ usage; exit 1; }
-    
-    bin="${HOME}/.local/bin"
-    etc="${HOME}/.local/etc/ssh_bandit"
-    script_dir="$(cd -- $(dirname -- "${BASH_SOURCE[0]}") &>/dev/null && pwd)"
+     pwfile="${etc}/passwords"
+     src="${script_dir}/ssh_bandit"
+     dest="${bin}/ssh_bandit"
 
-    pwfile="${etc}/passwords"
-    src="${script_dir}/ssh_bandit"
-    dest="${bin}/ssh_bandit"
+     [[ -f $src ]] || error_exit "Missing script source: $src"
 
-    [[ -f $src ]] || error_exit "Missing script source: $src"
+     if $install; then
+         $force || confirm install
+         echo '📦 Installing ssh_bandit...'
+         mkdir -p "$bin" "$etc"
+         cp "$src" "$dest"
+         chmod +x "$dest"
+         touch "$pwfile"
+         echo "✅ Installed ssh_bandit to: $dest"
+         echo "📁 Password file: $pwfile"
+         if ! echo "$PATH" | grep -q "$bin"
+         then error "Warning: $bin is not in your PATH."
+              echo  '    Add this to your ~/.profile or ~/.bashrc:'
+              echo  "    export PATH=\"${bin}:\$PATH\""
+         fi
+         if ! command -v sshpass &>/dev/null
+         then error "'sshpass' is not installed."
+              if [[ $OSTYPE == darwin* ]]
+              then echo 'Run: brew install sshpass'
+              else echo 'Run: sudo apt install sshpass'
+              fi
+         fi
+         exit 0
+     fi
 
-    if $install; then
-        $force || confirm install
-        echo '📦 Installing ssh_bandit...'
-        mkdir -p "$bin" "$etc"
-        cp "$src" "$dest"
-        chmod +x "$dest"
-        touch "$pwfile"
-        echo "✅ Installed ssh_bandit to: $dest"
-        echo "📁 Password file: $pwfile"
-        if ! echo "$PATH" | grep -q "$bin"; then
-            error "Warning: $bin is not in your PATH."
-            echo  '    Add this to your ~/.profile or ~/.bashrc:'
-            echo  "    export PATH=\"${bin}:\$PATH\""
-        fi
-        if ! command -v sshpass &>/dev/null; then
-            error "'sshpass' is not installed. "
-            echo -e \
-                "You will need to install sshpass " \
-                "(e.g. sudo apt install sshpass) for this tool to work"
-        fi
-        exit 0
-    fi
-
-    if $remove; then
-        $force || confirm uninstall
-        echo '🧹 Uninstalling ssh_bandit...'
-        rm -f "$dest"
-        echo "✅ Removed from: $dest"
-        if [[ -f $pwfile ]]; then
-            echo -e "\n⚠️ Password file remains: $pwfile"
-            echo -e "\tremove manually if desired."
-        fi
-        if command -v sshpass &>/dev/null; then
-            echo -e "\n⚠️ 'sshpass' is still installed; "
-            echo -e "\tuninstall manually if desired."
-        fi
-        exit 0
-    fi
+     if $remove; then
+         $force || confirm uninstall
+         echo '🧹 Uninstalling ssh_bandit...'
+         rm -f "$dest"
+         echo "✅ Removed from: $dest"
+         if [[ -f $pwfile ]]; then
+             echo -e "\n⚠️ Password file remains: $pwfile"
+             echo -e "\tremove manually if desired."
+         fi
+         if command -v sshpass &>/dev/null; then
+             echo -e "\n⚠️ 'sshpass' is still installed; "
+             echo -e "\tuninstall manually if desired."
+         fi
+         exit 0
+     fi
 fi
