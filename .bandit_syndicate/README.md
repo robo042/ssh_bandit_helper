@@ -61,7 +61,17 @@ Denton, TX 76201
 
 **$0.00**
 
+## Capacity
+
+This is an informal summer training group, not a lecture hall.
+
+Sessions will be led by one (1) experienced Linux engineer. If a lot of people show
+up, we will split into small groups by experience level and available space.
+
+The goal is to get people typing commands, asking questions, and learning by
+doing.
+
 ## Operating Principles
 
-Everything we'll be doing is based on **free** and **open-source** tools.
+Everything we do will be based on **free** and **open-source** tools.
 FOSS like a BOSS.
