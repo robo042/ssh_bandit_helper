@@ -25,7 +25,6 @@
 <img
   align="left"
   width="300"
-  height="300"
   alt="bandit syndicate" 
   src="https://github.com/user-attachments/assets/344bc02a-f0a8-42da-bee4-705b1a61272f"
 />
