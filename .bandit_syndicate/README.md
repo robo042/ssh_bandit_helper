@@ -35,7 +35,7 @@ as a group. Bandit is a beginner-friendly Linux wargame built around SSH,
 filesystems, permissions, shell tools, passwords, ports, weird filenames, and
 general terminal survival.
 
-This is Linux training in the old-school hacker sense: curiosity, terminals, 
+This is Linux training in the old-school hacker sense: curiosity,
 open systems, public knowledge, and hands-on learning.
 
 No prior Linux experience is required. All you need is a laptop with a functional terminal, 
