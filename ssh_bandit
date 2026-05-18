@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
 error(){ echo -e "❌ $@" >&2 && return 0 ; } 
 
 error_exit(){ error "$@"; exit 1; }
@@ -12,6 +10,7 @@ BANDIT_PASSWORDS="${HOME}/.local/etc/ssh_bandit/passwords"
 
 if [[ ${BASH_SOURCE[0]} == ${0} ]]; then 
 
+    set -euo pipefail
 
     if ! command -v sshpass &>/dev/null
     then error "'sshpass' is not installed. Please install it first."
