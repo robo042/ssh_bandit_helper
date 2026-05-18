@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
 
 confirm(){
     local prompt="Are you sure you want to $1 the ssh_bandit helper? (y/N)"
@@ -26,7 +25,7 @@ ____EOF
 }
 
 if [[ ${BASH_SOURCE[0]} == $0 ]]
-then 
+then set -euo pipefail
      force=/bin/false install=/bin/false remove=/bin/false
      while [[ $# -gt 0 ]]
      do case "$1" in -i|--install) install=/bin/true ;;
@@ -57,6 +56,10 @@ then
          cp "$src" "$dest"
          chmod +x "$dest"
          touch "$pwfile"
+         if [[ -e $pwfile ]]
+         then [[ -f $pwfile ]] || error_exit "something is wrong with $pwfile"
+         else printf '%s\n' 'bandit0' > "$pwfile"
+         fi
          echo "✅ Installed ssh_bandit to: $dest"
          echo "📁 Password file: $pwfile"
          if ! echo "$PATH" | grep -q "$bin"
