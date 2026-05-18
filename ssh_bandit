@@ -14,7 +14,7 @@ if [[ ${BASH_SOURCE[0]} == ${0} ]]; then
 
 
     if ! command -v sshpass &>/dev/null
-    then error "'sshpass' is not install. Please install it first."
+    then error "'sshpass' is not installed. Please install it first."
          if [[ $OSTYPE == darwin* ]]
          then echo 'Run: brew install sshpass'
          else echo 'Run: sudo apt install sshpass'
