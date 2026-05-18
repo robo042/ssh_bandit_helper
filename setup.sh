@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 confirm(){
     local prompt="Are you sure you want to $1 the ssh_bandit helper? (y/N)"
     read -p "$prompt" confirmation
