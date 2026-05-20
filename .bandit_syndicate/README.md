@@ -69,7 +69,6 @@ up, we will split into small groups by experience level and available space.
 The goal is to get people typing commands, asking questions, and learning by
 doing.
 
-## Operating Principles
+## Syndicate Q/A
 
-Everything we do will be based on **free** and **open-source** tools.
-FOSS like a BOSS.
+Is now live: https://answer.34-45-232-117.sslip.io/
